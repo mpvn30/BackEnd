@@ -21,7 +21,7 @@ router.post('/register', (req, res) => {
     })
 });
 
-server.get('/register', (req, res) => {
+router.get('/register', (req, res) => {
   res.status(200).json({message: "register is functional"})
 })
 
@@ -50,7 +50,7 @@ router.post('/login', (req, res) => {
     })
 });
 
-server.get('/login', (req, res) => {
+router.get('/login', (req, res) => {
   res.status(200).json({message: "post credentials"})
 })
 
