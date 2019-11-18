@@ -21,6 +21,11 @@ router.post('/register', (req, res) => {
     })
 });
 
+server.get('/register', (req, res) => {
+  res.status(200).json({message: "register is functional"})
+})
+
+
 router.post('/login', (req, res) => {
   // implement login
   let { username, password } = req.body;
@@ -44,6 +49,10 @@ router.post('/login', (req, res) => {
       res.status(500).json({error: "Login failed"})
     })
 });
+
+server.get('/login', (req, res) => {
+  res.status(200).json({message: "post credentials"})
+})
 
 function generateToken(user){
   const payload = {
