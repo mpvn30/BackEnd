@@ -41,8 +41,8 @@ function remove(id) {
         .delete();
 };
 
-function update(property, id) {
+function update(id, sleep) {
     return db('sleep')
         .where({ id })
-        .update(property);
+        .update(sleep);
 }

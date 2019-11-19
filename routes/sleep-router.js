@@ -59,5 +59,30 @@ server.delete('/:id', (req, res) => {
     });
 });
 
+server.put('/:id', (req, res) => {
+    const id = req.params.id;
+    const { bedTime, wakeTime, mood } = req.body;
+    if (!bedTime && !wakeTime && !mood) {
+      return res.status(400).json({error: 'Please provide name and bio for the user.'});
+    }
+    Sleep.update(id, { bedTime, wakeTime, mood })
+      .then(updated => {
+        if (updated) {
+          Sleep.findById(id)
+            .then(user => res.status(200).json(user))
+            .catch(err => {
+              console.log(err);
+              res.status(500).json({error:"The user information could not be modified"});
+            });
+        } else {
+          res.status(404).json({error: `The user with the specified ID does not exist.`});
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({error: 'The user information could not be modified.'});
+      });
+  });
+
 
 module.exports = server;
