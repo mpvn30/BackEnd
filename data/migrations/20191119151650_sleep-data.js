@@ -7,7 +7,7 @@ exports.up = function(knex) {
       tbl
         .string('wakeTime', 255)
       tbl
-        .integer('mood', 255)
+        .number('mood', 255)
     });
   };
   
