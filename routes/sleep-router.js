@@ -4,7 +4,7 @@ const restricted = require('./auth/authenticate-middleware.js');
 const server = express();
 
 
-server.get("/", restricted, (req, res) => {
+server.get("/", (req, res) => {
     Sleep.find()
     .then(sleep => {
         res.status(200).json(sleep)
