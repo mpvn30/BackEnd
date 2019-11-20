@@ -84,5 +84,42 @@ server.put('/:id', (req, res) => {
       });
   });
 
+  server.get('/:id/user', (req, res) => {
+    const { id } = req.params;
+  
+    Sleep.findSleep(id)
+    .then(sleep => {
+      if (sleep.length) {
+        res.json(sleep);
+      } else {
+        res.status(404).json({ message: 'Could not find data for given user' })
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Failed to get data' });
+    });
+  });
+
+  server.post('/:id/user', (req, res) => {
+    const sleepData = req.body;
+    const { id } = req.params; 
+  
+    Sleep.findById(id)
+    .then(user => {
+      if (user) {
+        Sleep.add(sleepData, id)
+        .then(sleep => {
+          res.status(201).json(sleep);
+        })
+      } else {
+        res.status(404).json({ message: 'Could not find data with given id.' })
+      }
+    })
+    .catch (err => {
+      res.status(500).json({ message: 'Failed to create new data' });
+    });
+  });
+
+
 
 module.exports = server;

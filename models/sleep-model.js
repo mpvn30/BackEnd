@@ -9,7 +9,9 @@ module.exports = {
     findById,
     remove,
     update,
-    findPropertiesByUserId
+    findPropertiesByUserId,
+    findSleep,
+    addSleep
 };
 
 function find() {
@@ -46,3 +48,25 @@ function update(id, sleep) {
         .where({ id })
         .update(sleep);
 }
+
+function findSleep(id) {
+    return db("sleep")
+      .join("users", "sleep.user_id", "users.id")
+      .select(
+        "sleep.id",
+        "sleep.mood",
+        "sleep.wakeTime",
+        "sleep.bedTime",
+        "users.username"
+      )
+      .orderBy("sleep.user_id")
+      .where({ "sleep.user_id": id });
+}
+
+function addSleep(sleep) {
+    return db("users")
+      .insert(sleep)
+      .then(ids => {
+        return { id: ids[0] };
+      });
+  }
