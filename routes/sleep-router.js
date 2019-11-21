@@ -84,7 +84,7 @@ server.put('/:id', (req, res) => {
       });
   });
 
-  server.get('/:id/user', (req, res) => {
+  server.get('/:id/user', restricted, (req, res) => {
     const { id } = req.params;
   
     Sleep.findSleep(id)
@@ -100,7 +100,7 @@ server.put('/:id', (req, res) => {
     });
   });
 
-  server.post('/:id/user', (req, res) => {
+  server.post('/:id/user', restricted, (req, res) => {
     const sleepData = req.body;
     const { id } = req.params; 
   
