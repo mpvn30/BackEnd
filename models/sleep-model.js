@@ -11,7 +11,8 @@ module.exports = {
     update,
     findPropertiesByUserId,
     findSleep,
-    addSleep
+    addSleep,
+    findId
 };
 
 function find() {
@@ -21,11 +22,17 @@ function find() {
 function findBy(filter) {
     return db('sleep').where(filter);
 };
-function add(property) {
+function add(data, id) {
     return db('sleep')
-        .insert(property, 'id');
+        .insert({ ...data, user_id: id });
 }
-function findById(id) {
+function findById(user_id) {
+    return db('sleep')
+        .where({ user_id })
+        .first();
+};
+
+function findId(id) {
     return db('sleep')
         .where({ id })
         .first();
@@ -51,22 +58,22 @@ function update(id, sleep) {
 
 function findSleep(id) {
     return db("sleep")
-      .join("users", "sleep.user_id", "users.id")
-      .select(
-        "sleep.id",
-        "sleep.mood",
-        "sleep.wakeTime",
-        "sleep.bedTime",
-        "users.username"
-      )
-      .orderBy("sleep.user_id")
-      .where({ "sleep.user_id": id });
+        .join("users", "sleep.user_id", "users.id")
+        .select(
+            "sleep.id",
+            "sleep.mood",
+            "sleep.wakeTime",
+            "sleep.bedTime",
+            "users.username"
+        )
+        .orderBy("sleep.user_id")
+        .where({ "sleep.user_id": id });
 }
 
 function addSleep(sleep) {
     return db("users")
-      .insert(sleep)
-      .then(ids => {
-        return { id: ids[0] };
-      });
-  }
+        .insert(sleep)
+        .then(ids => {
+            return { id: ids[0] };
+        });
+}

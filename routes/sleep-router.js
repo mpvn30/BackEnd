@@ -68,7 +68,7 @@ server.put('/:id', (req, res) => {
     Sleep.update(id, { bedTime, wakeTime, mood })
       .then(updated => {
         if (updated) {
-          Sleep.findById(id)
+          Sleep.findId(id)
             .then(user => res.status(200).json(user))
             .catch(err => {
               console.log(err);
